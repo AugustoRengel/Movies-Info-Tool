@@ -1,7 +1,9 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
-    kotlin("multiplatform")
+    val kotlinVersion = "1.8.0"
+    kotlin("multiplatform") version kotlinVersion
+    kotlin("plugin.serialization") version kotlinVersion
     id("org.jetbrains.compose")
 }
 
@@ -20,6 +22,13 @@ kotlin {
         withJava()
     }
     sourceSets {
+
+        val commonMain by getting {
+            dependencies {
+                implementation(kotlin("stdlib-common"))
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+            }
+        }
         val jvmMain by getting {
             dependencies {
                 implementation(compose.desktop.currentOs)
